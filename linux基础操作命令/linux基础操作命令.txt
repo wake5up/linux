@@ -1,0 +1,57 @@
+1.linux基本操作
+     目录相关文件：
+         pwd显示当前所在路径（绝对路径）
+         ls显示当前目录下文件(/目录分隔符)
+         ls -a当前目录下的隐藏文件
+         ls-l 显示目录下文件的详细信息
+         d开头是目录文件，- 开头普通文件，c开头是字符设备文件：键盘，b开头是块设备文件，l 符号链接文件，p开头的是管道文件
+         .当前目录，  ..上级目录
+         cd相当于打开目录  cd -返回上一次所在目录   cd ~快速返回当前用户的家目录
+         mkdir新建目录  -p递归创建多层目录
+         rmdir删除目录  -p递归删除多层目录
+         rm删除普通文件  加-f忽略提示信息，直接强删   加-r递归删除目录  加-rf强删
+         cp复制一个文件到另一个文件   -r 递归对目录下所有文件及进行拷贝包括目录本身  加-f忽略提示信息   cp test  bcd/   把test拷贝到bcd目录下
+         mv剪切  重命名  mv  tmp/passwd ./zhang.txt  把tmp目录中的passwd文件剪切到zhang.txt中，  mv zhang.txt ./wen.txt把zhang.txt改名为wen.txt(当前目录没有)  -i增加提示信息（是否覆盖）
+
+     文件相关目录：
+        touch 若文件不存在则创建一个空文件，否则刷新时间属性  touch "2012" passwd 改变passwd文件的访问时间和修改时间  touch -r passwd abc.txt  使用passwd文件时间刷新abc.txt的时间
+        cat查看文件内容显示到终端 -n打印行号
+        tac  按行逆序打印文件内容到终端
+        more （防止刷屏 ）分页显示文件内容   空格，向下翻页，  回车，向下滚动  q退出
+        less  分页显示文件内容   向下翻页：空格，f ，PgDn  向上翻页：b ，PgUp   向下滚动：j ，??   向上滚动：k  ??  q：退出    /string  向下匹配string字符串    ?string 向上匹配string字符串  n：下一个匹配的
+        head 显示开头前10行  head -n  20 file    显示fiile前20行
+        tail 显示后10行 tail  -n  20 file    显示fiile后20行
+        tail -f  一直刷新文件末尾新数据 
+        |  管道符，连接两个命令，将前边命令的输出结果作为后边命令的输入进行处理  
+        echo 加"字符串"，显示字符串 ‘ ’去除特殊字符的特殊含义
+        echo 加"字符串">>文件名  把字符串追加到文件中  > 清空文件原有数据，将数据写入文件
+  
+    压缩命令：
+        zip/unzip格式  zip  abc.zip  abc
+        gzip/gunzip格式  删除原文件，自动生成压缩包
+        bzip2/bunzip2   删除原文件，自动生成压缩包
+        tar  -c  打包   -x 解包  -z在打包/解包同时进行gzip格式压缩解压缩  -j在打包/解包同时进行bzip2格式压缩解压缩   -v 显示详细的打包/解包信息   -f 指定包名称（后面必须跟上包名）                   
+        tar -czvf test/tar.gz file1  file2  打包  tar -xzvf test.tar.gz  解包  如果不写z的话，系统自己会判断
+
+    时间日期命令：
+        cal 查看日历  -3 查看附近3个月日历   -y 查看全年日历  -j 一年中距离第一天的天数
+        date 查看/设置系统时间  +‘ ’ 以指定格式显示时间  +‘%Y-%m-%d  %H:%M:%S’  +'%S'时间戳      -s 设置系统时间   date -s '2018-2-27  10:44:33'
+
+    匹配查找命令：
+        grep  从文件内容中匹配包含字符串的行  -i 忽略大小写进行匹配  -v 反向匹配，匹配不包含指定字符串的行  -R 递归对指定目录下的所有文件逐一内容匹配
+        find    在指定目录下搜索文件  -name 按照文件名查找  find ./-name "*package*" (*)模糊查找  -type  按照文件类型查找文件   -size -/+n（b,c,w,k,M,G） 按文件大小查找                                    
+        -mtime -atime -ctime+/-n 按天查找   -mmin -amin -cmin +/-n 按分查找                                               
+        -exec 命令操作   find ./-name "*.c"-exec rm  -rf '{ }' \ ;
+
+    其他命令：
+        man 手册命令，eg：man ls
+        stat +文件名：时间：最后一次访问时间/修改/状态改变时间
+        ctrl +c 中断操作
+        bc 计算器
+        tab 自动补全
+        reboot重启
+        shutdown -h now 立即关机   halt  立即关机
+        tree 加目录名  树状图显示目录
+
+2.shell（命令行解释器）：保护内核，实现用户与内核之间的沟通（桥梁）
+        shell命令：我们所致行动命令其实就是一个个都程序封装了相应功能
